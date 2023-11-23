@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from 'react';
 
 function ToFetchData() {
-  const [person, setPerson] = useState(null);
-  const toFetchUrl = async () => {
-    const fetchUrl = await fetch('https://api.randomuser.me/');
-    const data = await fetchUrl.json();
-    const [item] = data.results;
-    setPerson(item);
-  };
+  const [users, setUsers] = useState([]);
+
   useEffect(() => {
-    toFetchUrl();
+    const fetchData = async () => {
+      const response = await fetch(
+        'https://jsonplaceholder.typicode.com/users'
+      );
+      const data = await response.json();
+      setUsers(data);
+    };
+
+    fetchData();
   }, []);
 
   return (
     <div>
-      {person && (
-        <>
-          <h1>Welcome to the random name Generator</h1>
-          <h4>(Refresh it to generate new name)</h4>
-          <h1>
-            Name : {person.name.first} {person.name.last}
-          </h1>
-        </>
-      )}
+      <h1>User List</h1>
+      <ul>
+        {users.map((user) => (
+          <li key={user.id}>
+            <h3>{user.name}</h3>
+            <p>Username: {user.username}</p>
+            <p>Email: {user.email}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
