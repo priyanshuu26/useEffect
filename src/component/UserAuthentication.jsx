@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 function UserAuthentication() {
   const [data, setData] = useState({ username: '', password: '' });
@@ -37,11 +36,7 @@ function UserAuthentication() {
           value={data.password}
           onChange={handleChange}
         />
-        <button type="submit">
-          <Link to={!log ? '' : '/home'} className="link">
-            {!log ? 'login' : 'logout'}
-          </Link>
-        </button>
+        <button type="submit">{!log ? 'login' : 'logout'}</button>
       </form>
     </div>
   );
